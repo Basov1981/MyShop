@@ -13,7 +13,7 @@ enum Tara {
 }
 
 
-public class Produkt {
+public class Produkt implements Comparable<Produkt> {
 
     String name;
     Proizvoditel proisvoditel;
@@ -35,35 +35,19 @@ public class Produkt {
         this.kolichestvo = kolichestvo;
     }
 
-    public int compareTo(Produkt t) {
 
-        int rez = 0;
-        boolean flag = !this.name.equals(t.name) ||
-                !this.proisvoditel.equals(t.proisvoditel) ||
-                t.chena != this.chena;
-        if (flag) rez = 1;
-        else {
-            if (t.kolichestvo != kolichestvo) {
-                for (int r = 0; r < 1; r++) {
-                    int id;
-                    id = (t.kolichestvo += kolichestvo);
-                    kolichestvo = id;
-                }
-            } else {
-                int id = kolichestvo;
-                for (int r = 0; r < 1; r++) {
-                    id += kolichestvo - t.kolichestvo;
-                    kolichestvo = id;
-                }
-            }
+    public int compareTo(Produkt t) {
+        int rez = this.name.compareTo(t.name) + (this.chena - t.chena) + this.tara.compareTo(t.tara) + (this.srokGodnosti - t.srokGodnosti);
+
+        if (rez == 0) {
+            t.kolichestvo = t.kolichestvo + this.kolichestvo;
         }
         return rez;
     }
 
-
     @Override
     public String toString() {
-        return "Продукт" +
+        return "\n" + "Продукт" +
                 " название - " + name + '\'' +
                 ", производитель - " + proisvoditel +
                 ", категория - " + categoria +
@@ -74,6 +58,7 @@ public class Produkt {
                 ", количество - " + kolichestvo +
                 '}';
     }
+
 }
 
 

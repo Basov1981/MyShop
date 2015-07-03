@@ -3,11 +3,11 @@ import java.util.*;
 /**
  * Created by IBAH on 01.07.15.
  */
-public class User {
+public class User implements Comparable<User> {
 
-    static double nacenka = 1.5;
+
     static Set<User> userW = new TreeSet<>();
-    static ArrayList<Produkt> goodsUs = new ArrayList<>();
+
 
     String userName;
     String userPhone;
@@ -21,85 +21,68 @@ public class User {
         this.password = password;
     }
 
-    public ArrayList<Produkt> getGoodsUs() {
-
-        for (Produkt tmp : Sklad.goods) {
-
-            tmp.chena *= nacenka;
-            goodsUs.add(tmp);
-
-
-        }
-
-        return goodsUs;
-
-    }
 
     @Override
     public String toString() {
-        return "User{" +
-                "Имя пользователя  " + userName + '\'' +
-                "Телефон пользователя" + userPhone + '\'' +
-                "Електронная почта пользователя" + userMail + '\'' +
-                "Пароль" + password + '\'' +
+        return "\n" +"User{" +
+                "РРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ  "+ userName + '\'' +"РўРµР»РµС„РѕРЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ  "+ userPhone + '\'' +"Р•Р»РµРєС‚СЂРѕРЅРЅР°СЏ РїРѕС‡С‚Р° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ  "+ userMail + '\'' + "РџР°СЂРѕР»СЊ  "+ password + '\'' +
                 '}';
     }
 
-    public void addUser(User user) {
-        for (User temp : userW) {
-            if (temp.userName.equals(user.userName) && temp.userMail.equals(user.userMail)) {
-                System.out.println("Пользователь " + temp.userName + " с электонной почтой - " + temp.userMail + " уже существует ");
-                System.out.println();
-            }
-        }
-        userW.add(user);
+//    public void addUser(User user) {
+//        for (User temp : userW) {
+//            if (temp.userName.equals(user.userName) && temp.userMail.equals(user.userMail)) {
+//                System.out.println("РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ " + temp.userName + " СЃ СЌР»РµРєС‚РѕРЅРЅРѕР№ РїРѕС‡С‚РѕР№ - " + temp.userMail + " СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚ ");
+//                System.out.println();
+//            }
+//        }
+//        userW.add(user);
+//
+//    }
+//
+//    public void reportUser(String userName, String pass) {
+//        if (userName.equals("Admin") && pass == "5555") {
+//            System.out.println("Р’СЃРµ РїРѕР»СЊР·РѕРІР°С‚РµР»Рё РІ Р±Р°Р·Рµ РґР°РЅРЅС‹С…");
+//            {
+//                for (User temp : userW) {
+//                    System.out.println(temp);
+//                }
+//            }
+//        } else System.out.println("\n" + "Р”Р»СЏ РїРѕСЃРјРѕС‚СЂР° СЃРїРёСЃРєР° РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ РІРІРµРґРёС‚Рµ РїСЂР°РІРёР»СЊРЅРѕРµ РёРјСЏ Рё РїР°СЂРѕР»СЊ" + "\n");
+//
+//
+//    }
+//
+//    public void reportUserPass(String userName, String password) {
+//        for (User temp : userW) {
+//            if (temp.userName.equals(userName) && temp.password.equals(password)) {
+//                System.out.println("Р’Р°С€ Р»РѕРіРёРЅ Рё РїР°СЂРѕР»СЊ");
+//                System.out.println(temp);
+//            }
+//        }
+ //   }
 
+
+    @Override
+    public int compareTo(User o) {
+
+        int rez = this.userName.compareTo(o.userName) + this.userPhone.compareTo(o.userPhone);
+
+        return rez;
     }
 
-    public void reportUser(String userName, String pass) {
-        if (userName.equals("Admin") && pass == "5555") {
-            System.out.println("Все пользователи в базе данных");
-            {
-                for (User temp : userW) {
-                    System.out.println(temp);
-                }
-            }
-        } else System.out.println("\n" + "Для посмотра списка пользователей введите правильное имя и пароль" + "\n");
-
-
+    public boolean addUsers(User us){
+        return userW.add(us);
     }
 
-    public void reportUserPass(String userName, String password) {
-        for (User temp : userW) {
-            if (temp.userName.equals(userName) && temp.password.equals(password)) {
-                System.out.println("Ваш логин и пароль");
-                System.out.println(temp);
-            }
-        }
+    public boolean deleteUser(User us1){
+        return userW.remove(us1);
+    }
+
+    public void showUsers(){
+        System.out.println(userW);
     }
 
 
-    public Collection<Produkt> searchName(String name, Collection<Produkt> searchNam) {
-        Vector<Produkt> sName = new Vector<>();
-        for (Produkt tmp : searchNam) {
-            if (tmp.name.equals(name))
-                sName.add(tmp);
-        }
-        if (sName.isEmpty()) {
-            System.out.println("Неверное наименование товара. Выводим весь товар.");
-            searchNam.addAll(searchNam);
-        }
 
-        return sName;
-    }
-
-    public Collection<Produkt> searchCategory(Categoria categoria, Collection<Produkt> searchCat) {
-        Vector<Produkt> sCategory = new Vector<>();
-        for (Produkt tmp : searchCat) {
-            if (tmp.categoria.equals(categoria))
-                sCategory.add(tmp);
-        }
-        return sCategory;
-    }
-
-  }
+}
