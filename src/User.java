@@ -66,7 +66,7 @@ public class User implements Comparable<User> {
     @Override
     public int compareTo(User o) {
 
-        int rez = this.userName.compareTo(o.userName) + this.userPhone.compareTo(o.userPhone);
+        int rez = this.userName.compareTo(o.userName)*1111 + this.userPhone.compareTo(o.userPhone);
 
         return rez;
     }

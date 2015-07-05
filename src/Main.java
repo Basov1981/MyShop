@@ -61,10 +61,12 @@ public class Main {
 
         users1.deleteUser(users3);// пользователь Сидоров не удаляется????
 
-        Order orderUs = new Order(users1, new Date(),"Десант", Proizvoditel.Оболонь,Tara.Бутылка_0_5_л,15, 5 , 50);
-        Order orderUs1 = new Order(users1, new Date(),"Десант", Proizvoditel.Оболонь,Tara.Бутылка_0_5_л,15, 5 , 50);
-        Order orderUs2 = new Order(users1, new Date(),"Десант", Proizvoditel.Оболонь,Tara.Бутылка_0_5_л,15, 5 , 50);
-        Order orderUs3 = new Order(users1, new Date(),"Десант", Proizvoditel.Оболонь,Tara.Бутылка_0_5_л,15, 5 , 50);
+        users1.showUsers();
+
+//        Order orderUs = new Order(users1, new Date(),"Десант", Proizvoditel.Оболонь,Tara.Бутылка_0_5_л,15, 5 , 50);
+//        Order orderUs1 = new Order(users1, new Date(),"Десант", Proizvoditel.Оболонь,Tara.Бутылка_0_5_л,15, 5 , 50);
+//        Order orderUs2 = new Order(users1, new Date(),"Десант", Proizvoditel.Оболонь,Tara.Бутылка_0_5_л,15, 5 , 50);
+//        Order orderUs3 = new Order(users1, new Date(),"Десант", Proizvoditel.Оболонь,Tara.Бутылка_0_5_л,15, 5 , 50);
 
 
 

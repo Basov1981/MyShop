@@ -1,84 +1,61 @@
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Vector;
+import java.util.*;
 
 
+public class Order implements  Comparable<Order>{
+    private Set<Order> musor= new TreeSet<>();
+    int numberOrd;
+    int statusOrd;
+    Date dateCreate;
+    private Map < Produkt, Integer> korzina = new TreeMap<>();
 
+    private static int maxNumber ;
 
-public class Order {
+    public Order() {
+        this.numberOrd=maxNumber+1;
+        this.dateCreate=new Date();
+        musor.add(this);
 
-    static ArrayList<Order> userBasket = new ArrayList<>();
-    User user;
-    Date datePurchases;
-    String name;
-    Proizvoditel proizvoditel;
-    Tara tara;
-    int price;
-    int salesitem;
-    int sum;
-
-    public Order(User user, Date datePurchases, String name, Proizvoditel proizvoditel, Tara tara, int price, int salesitem, int sum) {
-        this.user = user;
-        this.datePurchases = datePurchases;
-        this.name = name;
-        this.proizvoditel = proizvoditel;
-        this.tara = tara;
-        this.price = price;
-        this.salesitem = salesitem;
-        this.sum = sum;
     }
 
-    public ArrayList<Order> addToBasket(Order order) {
-        if (userBasket.add(order)) {
-            for (Produkt tmt : Sklad.goods) {
-                if (tmt.name.equals(this.name) && tmt.tara.equals(this.tara)) {
-                    if (tmt.kolichestvo >= salesitem)
-                        tmt.kolichestvo -= salesitem;
-                    else {
-                        System.out.println("Не хватает товара " + this.name + " " + this.tara + " для пользователя " + this.user.userName);
-                    }
-                }
-            }
+    public static void main(String[] args) {
+        Order ord= new Order();
+        Produkt beer = new Produkt("Десант", Proizvoditel.Оболонь, Categoria.alkogol, new Date(), Tara.Бутылка_0_5_л, 12, 14, 70);
+        Produkt beer1 = new Produkt("Десант", Proizvoditel.Оболонь, Categoria.alkogol, new Date(), Tara.Бутылка_0_33_л, 10, 14, 100);
+        Produkt beer2 = new Produkt("Венское", Proizvoditel.Оболонь, Categoria.alkogol, new Date(), Tara.Бутылка_0_5_л, 15, 12, 80);
+        ord.addIten(beer,1);
+        ord.addIten(beer,2);
+        System.out.println(ord.toString());
+    }
+
+    public void addIten(Produkt pr, int countProd ){
+
+        if(  korzina.containsKey(pr)){
+            int newCount =  korzina.get(pr)+ countProd;
+            korzina.put(pr, newCount);
         }
-        sum = price * salesitem;
-        return userBasket;
-    }
-
-    public ArrayList<Order> delItemsinBasket(Order order) {
-        if (userBasket.remove(order)) {
-            for (Produkt tmp : Sklad.goods) {
-                if (tmp.name.equals(this.name) && tmp.tara.equals(this.tara)) {
-                    tmp.kolichestvo += salesitem;
-                }
-            }
+        else {
+            korzina.put(pr, countProd);
+            System.out.println(korzina);
         }
-        sum = price * salesitem;
-        System.out.println(userBasket);
-        return userBasket;
+        pr.kolichestvo=pr.kolichestvo-countProd;
     }
 
-//    public Collection<Order> searchUser() {
-//        Vector<Order> sUse = new Vector<>();
-//        for (Order tmp : searchUser) {
-//            if (this.user.userName.equals(tmp.user.userName))
-//                sUse.add(tmp);
-//        }
-//        return sUse;
-//    }
+    @Override
+    public int compareTo(Order or) {
 
+        return  this.numberOrd - or.numberOrd;
+    }
 
     @Override
     public String toString() {
-        return "Order{" +
-                "user=" + user +
-                ", datePurchases=" + datePurchases +
-                ", name='" + name + '\'' +
-                ", proizvoditel=" + proizvoditel +
-                ", tara=" + tara +
-                ", price=" + price +
-                ", salesitem=" + salesitem +
-                ", sum=" + sum +
-                '}';
+        String result="";
+        Set<Map.Entry<Produkt,Integer>> temp= korzina.entrySet();
+        for(Map.Entry<Produkt,Integer> qwe:temp){
+            result=result+"Товар "+qwe.getKey().name+ " количество -"+qwe.getValue()+" zak "+this.numberOrd+ "\n";
+        }
+
+        return result;
     }
+
+
 }
